@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"
+      integrity="sha512-KaIyHb30iXTXfGyI9cyKFUIRSSuekJt6/vqXtyQKhQP6ozZEGY8nOtRS6fExqE4+RbYHus2yGyYg1BrqxzV6YA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      #mostrar {
+        display: none;
+      }
+
+      #final {
+        display: none;
+      }
+
+      #paso-2 {
+        display: none;
+      }
+
+      #required-fields1 {
+        display: none;
+      }
+
+      #required-fields2 {
+        display: none;
+      }
+
+      .my-border {
+        border-style: solid;
+        border-radius: 15px;
+        border-color: rgb(23, 124, 45);
+        padding: 30px;
+      }
+
+      .my-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #e9ecef;
+        padding-left: 15%;
+        padding-right: 12%;
+        width: 120%;
+        margin-left: -10%;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .my-fotter {
+        text-align: center;
+        color: #ffffff;
+        background-color: #1b5a4a;
+        padding-top: 15px;
+        /* padding-bottom: 20px; */
+        width: 120%;
+        height: 60px;
+        margin-left: -10%;
+        /* min-height: 183px; */
+        /* margin-bottom: 15px; */
+      }
+
+      .logo {
+        width: 200px;
+        height: auto;
+      }
+
+      .logo-alt {
+        width: 150px;
+        height: auto;
+      }
+
+      .social-fotter {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .social-icon {
+        width: 35px;
+        height: auto;
+        margin-right: 6px;
+      }
+    </style>
+    <title>Cotizador Universitario</title>
+  </head>
+
+  <body>
+    <div class="container mt-5">
+      <section>
+        <div class="text-center mt-3">
+          <h1 class="title">Cotizador Universitario</h1>
+        </div>
+        <label for="nombre">Nombre</label>
+        <input
+          class="form-control mb-3"
+          id="nombre"
+          placeholder="Nombre del hijo"
+        />
+        <label for="edad">Edad</label>
+        <input
+          class="form-control mb-3"
+          id="edad"
+          placeholder="Edad del hijo"
+        />
+        <label for="universidad">Universidad</label>
+        <input
+          class="form-control mb-3"
+          id="universidad"
+          placeholder="Nombre de la universidad"
+        />
+        <label for="costo">Costo del semestre</label>
+        <input
+          class="form-control mb-3"
+          id="costo"
+          placeholder="Costo del semestre actual"
+        />
+        <label for="numero">Número de semestres</label>
+        <input
+          class="form-control mb-3"
+          id="numero"
+          placeholder="Número de semestres"
+        />
+        <div class="text-center mt-4">
+          <button type="button" id="calculate" class="btn btn-success btn-lg">
+            Calcular
+          </button>
+        </div>
+      </section>
+    </div>
+    <section style="display: none" id="result" class="mx-5 mt-5">
+      <div class="text-center py-2" style="background: #073365; color: #ffffff">
+        <h3>COSTO PROYECTADO PARA LA UNIVERSIDAD</h3>
+        <h4 id="univName"></h4>
+        <h4 id="userName"></h4>
+        <h5 id="date"></h5>
+      </div>
+
+      <div style="width: 40%">
+        <table class="table-sm table-striped mt-4 mb-3 text-center">
+          <tbody>
+            <tr>
+              <td>COSTO SEMESTRAL</td>
+              <td class="px-3"><small>PESOS</small></td>
+              <td id="costoBlock"></td>
+            </tr>
+            <tr>
+              <td>NUMERO DE SEMESTRES</td>
+              <td class="px-3"></td>
+              <td id="numBlock"></td>
+            </tr>
+            <tr>
+              <td>COSTO TOTAL DE UNA CARRERA</td>
+              <td class="px-3"><small>PESOS</small></td>
+              <td id="totalBlock"></td>
+            </tr>
+            <tr>
+              <td>TIPO DE CAMBIO</td>
+              <td class="px-3"><small>UDI'S</small></td>
+              <td>$6.44</td>
+            </tr>
+            <tr>
+              <td>COSTO DE UNA CARRERA EN UDIS</td>
+              <td class="px-3"><small>UDI'S</small></td>
+              <td id="totalUdis"></td>
+            </tr>
+            <tr>
+              <td>TIPO DE CAMBIO</td>
+              <td class="px-3"><small>DOLAR</small></td>
+              <td>$24.85</td>
+            </tr>
+            <tr>
+              <td>COSTO DE UNA CARRERA EN DOLARES</td>
+              <td class="px-3"><small>DOLAR</small></td>
+              <td id="totalDolar"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table class="table-sm table-striped table-bordered mb-5">
+        <thead class="grey lighten-2">
+          <tr>
+            <th scope="col">AÑO</th>
+            <th scope="col">EDAD</th>
+            <th scope="col">INFLACIÓN DE MÉXICO ANUAL</th>
+            <th scope="col">INFLACIÓN DE MÉXICO ACUMULADA</th>
+            <th scope="col">INFLACION UNIVERSIDAD PRIVADA 2.5% ANUAL</th>
+            <th scope="col">INFLACION UNIVERSIDAD PRIVADA 2.5% ACUMULADA</th>
+            <th scope="col">INFLACION USA ANUAL</th>
+            <th scope="col">INFLACION USA ACUMULADA</th>
+            <th scope="col">VALOR FUTURO DOLAR</th>
+            <th scope="col">VALOR FUTURO UDI'S</th>
+            <th scope="col">VALOR FUTURO PESO</th>
+            <th scope="col">VALOR FUTURO UDI'S</th>
+            <th scope="col">VALOR FUTURO DOLAR</th>
+          </tr>
+        </thead>
+        <tbody id="tBody">
+          <!-- <tr>
+            <th>2020</th>
+            <td>10</td>
+            <td>4.00%</td>
+            <td>0%</td>
+            <td>6.50%</td>
+            <td>0%</td>
+            <td>2.50%</td>
+            <td>0%</td>
+            <td>24.85</td>
+            <td>6.44</td>
+            <td>25,000</td>
+            <td>3,882</td>
+            <td>1,006</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </section>
+    <script>
+      function FV(rate, nper, pmt, pv, type) {
+        var pow = Math.pow(1 + rate, nper),
+          fv;
+        if (rate) {
+          fv = (pmt * (1 + rate * type) * (1 - pow)) / rate - pv * pow;
+        } else {
+          fv = -1 * (pv + pmt * nper);
+        }
+        return fv;
+      }
+      var calculateBtn = document.getElementById('calculate');
+      calculateBtn.onclick = function () {
+        var meses = [
+          'Enero',
+          'Febrero',
+          'Marzo',
+          'Abril',
+          'Mayo',
+          'Junio',
+          'Julio',
+          'Agosto',
+          'Septiembre',
+          'Octubre',
+          'Noviembre',
+          'Diciembre',
+        ];
+
+        var currentDate = new Date();
+        var dia = currentDate.getDate();
+        var mes = meses[currentDate.getMonth()];
+        var ano = currentDate.getFullYear();
+        var name = document.getElementById('nombre').value;
+        var edad = Number(document.getElementById('edad').value);
+        var universidad = document.getElementById('universidad').value;
+        var costo = Number(document.getElementById('costo').value);
+        var numero = Number(document.getElementById('numero').value);
+
+        var anoInicial = 2020;
+        var dolar = 24.85;
+        var total = costo * numero;
+        var totalDolares = total / dolar;
+
+        var univName = document.getElementById('univName');
+        var userName = document.getElementById('userName');
+        var date = document.getElementById('date');
+        var tBody = document.getElementById('tBody');
+        var costoBlock = document.getElementById('costoBlock');
+        var totalBlock = document.getElementById('totalBlock');
+        var numBlock = document.getElementById('numBlock');
+        var totalUdis = document.getElementById('totalUdis');
+        var totalDolar = document.getElementById('totalDolar');
+        var result = document.getElementById('result');
+
+        univName.innerHTML = universidad;
+        userName.innerHTML = name;
+        date.innerHTML = `${dia} de ${mes} de ${ano}`;
+        costoBlock.innerHTML = '$' + costo;
+        numBlock.innerHTML = numero;
+        totalBlock.innerHTML = '$' + total;
+        totalUdis.innerHTML = '$' + (total / 6.44).toFixed(2);
+        totalDolar.innerHTML = '$' + totalDolares.toFixed(2);
+
+        for (let i = 0; i < 21; i++) {
+          tBody.innerHTML += `<tr>
+            <th>${anoInicial + i}</th>
+            <td>${edad + i}</td>
+            <td>4.00%</td>
+            <td>${((FV(0.04, i, 0, -1, 1) - 1) * 100).toFixed(2)}%</td>
+            <td>6.50%</td>
+            <td>${((FV(0.065, i, 0, -1, 1) - 1) * 100).toFixed(2)}%</td>
+            <td>2.50%</td>
+            <td>${((FV(0.025, i, 0, -1, 1) - 1) * 100).toFixed(2)}%</td>
+            <td>$${(
+              (total * (1 + (FV(0.04, i, 0, -1, 1) - 1))) /
+              (totalDolares * (1 + (FV(0.025, i, 0, -1, 1) - 1)))
+            ).toFixed(2)}</td>
+            <td>$${(6.44 * (1 + (FV(0.04, i, 0, -1, 1) - 1))).toFixed(2)}</td>
+            <td>${(total * (1 + (FV(0.065, i, 0, -1, 1) - 1))).toFixed(2)}</td>
+            <td>${(
+              (total * (1 + (FV(0.065, i, 0, -1, 1) - 1))) /
+              (6.44 * (1 + (FV(0.04, i, 0, -1, 1) - 1)))
+            ).toFixed(2)}</td>
+            <td>${(
+              (6.44 * (1 + (FV(0.04, i, 0, -1, 1) - 1))) /
+              (((dolar * (1 + (FV(0.04, i, 0, -1, 1) - 1))) / totalDolares) *
+                (1 + (FV(0.025, i, 0, -1, 1) - 1)))
+            ).toFixed(2)}</td>
+          </tr>`;
+        }
+        result.style.display = 'block';
+        result.scrollIntoView({ behavior: 'smooth' });
+      };
+    </script>
+  </body>
+</html>
